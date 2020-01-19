@@ -97,7 +97,7 @@ else
 endif
 
 # Build the version code
-version_code_package := $(base_version_major)$(base_version_minor)$(base_version_build)$(base_version_buildtype)$(base_version_arch)$(base_version_density)
+version_code_package := $(PLATFORM_VERSION)
 
 # The version name scheme for the package apk is:
 # - For platform builds:     M.m.bbb
@@ -109,12 +109,12 @@ ifdef TARGET_BUILD_APPS
 ifeq ($(strip $(HAS_BUILD_NUMBER)),false)
   git_hash := $(shell git --git-dir $(LOCAL_PATH)/.git log -n 1 --pretty=format:%h)
   date_string := $$(date +%m%d%y_%H%M%S)
-  version_name_package := $(base_version_major).$(base_version_minor).$(base_version_build) (eng.$(BUILD_USERNAME).$(git_hash).$(date_string)-$(base_version_arch)$(base_version_density))
+  version_name_package := $(PLATFORM_VERSION).$(ONE_RELEASE).$(BUILD_USERNAME)
 else
-  version_name_package := $(base_version_major).$(base_version_minor).$(base_version_build) ($(BUILD_NUMBER_FROM_FILE)-$(base_version_arch)$(base_version_density))
+  version_name_package := $(PLATFORM_VERSION).$(ONE_RELEASE).$(BUILD_USERNAME)
 endif
 else # !TARGET_BUILD_APPS
-  version_name_package := $(base_version_major).$(base_version_minor).$(base_version_build)
+  version_name_package := $(PLATFORM_VERSION).$(ONE_RELEASE).$(BUILD_USERNAME)
 endif
 
 # Cleanup the locals
